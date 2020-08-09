@@ -1,0 +1,21 @@
+﻿<div>
+    <h2>All products are shown here</h2>
+</div>
+<h2>@Model.CurrentCategory</h2>
+@{
+    foreach (var product in Model.Products)
+    {
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <img src="@product.ImageThumbnailUrl" alt="" />
+                <div class="caption">
+                    <h3 class="pull-right">@product.Price.ToString()</h3>
+                    <h3>
+                        <a>@product.Name</a>
+                    </h3>
+                <p>@product.ShortDescription<p>
+                 </div>
+            </div>
+        </div>
+    }
+}

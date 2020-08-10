@@ -22,19 +22,31 @@ namespace FruitsAndVegetables
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         private IConfigurationRoot _configurationRoot;
-
+        private string _contentRootPath = "";// string con set
         public Startup(IWebHostEnvironment hostingEnvironment)
         {
+            
             _configurationRoot = new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .Build();
+            _contentRootPath = hostingEnvironment.ContentRootPath;// string con set
         }
         public void ConfigureServices(IServiceCollection services)
         {
+
+            
+            
+
+            string conn = _configurationRoot.GetConnectionString("DefaultConnection");// string con set
+           // if (conn.Contains("%CONTENTROOTPATH%"))
+         //   {
+         //       conn = conn.Replace("%CONTENTROOTPATH%", _contentRootPath);
+         //   }
+
             //server configuration
             services.AddDbContext<AppDbContext>(options =>
-               options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
-           
+               options.UseSqlServer(conn));
+
             //services.AddTransient<IProductRepository,MockProductRepository>();
             //services.AddTransient<ICategoryRepository,MockCategoryRepository>();
             services.AddTransient<IProductRepository,ProductRepository>();
@@ -53,6 +65,7 @@ namespace FruitsAndVegetables
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+            
 
             DbInitializer.Seed(serviceProvider);
         }

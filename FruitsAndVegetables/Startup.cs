@@ -53,6 +53,7 @@ namespace FruitsAndVegetables
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+            
 
             DbInitializer.Seed(serviceProvider);
         }

@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using FruitsAndVegetables.Data;
+using Microsoft.EntityFrameworkCore;
+using FruitsAndVegetables.Data.Repositories;
 
 namespace FruitsAndVegetables
 {
@@ -17,24 +21,40 @@ namespace FruitsAndVegetables
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        private IConfigurationRoot _configurationRoot;
+
+        public Startup(IWebHostEnvironment hostingEnvironment)
+        {
+            _configurationRoot = new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .Build();
+        }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IProductRepository,MockProductRepository>();
-            services.AddTransient<ICategoryRepository,MockCategoryRepository>();
+            //server configuration
+            services.AddDbContext<AppDbContext>(options =>
+               options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+           
+            //services.AddTransient<IProductRepository,MockProductRepository>();
+            //services.AddTransient<ICategoryRepository,MockCategoryRepository>();
+            services.AddTransient<IProductRepository,ProductRepository>();
+            services.AddTransient<ICategoryRepository,CategoryRepository>();
+
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseRouting();
             app.UseMvcWithDefaultRoute();
 
+            DbInitializer.Seed(serviceProvider);
         }
     }
 }

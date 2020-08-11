@@ -14,13 +14,15 @@ using Microsoft.Extensions.Configuration;
 using FruitsAndVegetables.Data;
 using Microsoft.EntityFrameworkCore;
 using FruitsAndVegetables.Data.Repositories;
+using FruitsAndVegetables.Data.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace FruitsAndVegetables
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        //Install-Package Microsoft.AspNetCore.Session
         private IConfigurationRoot _configurationRoot;
 
         public Startup(IWebHostEnvironment hostingEnvironment)
@@ -31,6 +33,8 @@ namespace FruitsAndVegetables
         }
         public void ConfigureServices(IServiceCollection services)
         {
+
+            
             //server configuration
             services.AddDbContext<AppDbContext>(options =>
                options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
@@ -40,7 +44,16 @@ namespace FruitsAndVegetables
             services.AddTransient<IProductRepository,ProductRepository>();
             services.AddTransient<ICategoryRepository,CategoryRepository>();
 
+        
+            //     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        
+            services.AddHttpContextAccessor();
+
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMemoryCache();
+            services.AddSession();
 
 
         }
@@ -52,6 +65,7 @@ namespace FruitsAndVegetables
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseMvcWithDefaultRoute();
 
             DbInitializer.Seed(serviceProvider);

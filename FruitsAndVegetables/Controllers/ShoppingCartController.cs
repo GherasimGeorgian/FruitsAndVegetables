@@ -18,7 +18,7 @@ namespace FruitsAndVegetables.Controllers
             _productRepository = productRepository;
             _shoppingCart = shoppingCart;
         }
-        public IActionResult Index()
+        public ViewResult Index()
         {
             var items = _shoppingCart.GetShoppingCartItems();
             _shoppingCart.ShoppingCartItems = items;
@@ -30,17 +30,17 @@ namespace FruitsAndVegetables.Controllers
             return View(sCVM);
         }
 
-        public RedirectToActionResult AddToShoppingCart(int productId)
+        public RedirectToActionResult AddToShoppingCart(int produceId)
         {
-            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == productId);
+            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == produceId);
             if(selectedProduct!= null){
                 _shoppingCart.AddToCart(selectedProduct,1);
             }
-            return RedirectToAction("Index" );
+            return RedirectToAction("Index");
         }
-        public RedirectToActionResult RemoveFromShoppingCart(int productId)
+        public RedirectToActionResult RemoveFromShoppingCart(int produceId)
         {
-            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == productId);
+            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == produceId);
             if (selectedProduct != null)
             {
                 _shoppingCart.RemoveFromCart(selectedProduct);

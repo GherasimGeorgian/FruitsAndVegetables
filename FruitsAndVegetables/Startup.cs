@@ -52,6 +52,8 @@ namespace FruitsAndVegetables
 
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
+            services.AddTransient<IOrderRepository, OrderRepository>();
+
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMemoryCache();
             services.AddSession();

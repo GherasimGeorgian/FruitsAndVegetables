@@ -17,6 +17,7 @@ using FruitsAndVegetables.Data.Repositories;
 using FruitsAndVegetables.Data.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing.Template;
 
 namespace FruitsAndVegetables
 {
@@ -66,8 +67,12 @@ namespace FruitsAndVegetables
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMvcWithDefaultRoute();
-
+            //app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "categoryFilter", template: "Product/{action}/{category?}",defaults: new { Controller = "Product", action = "List" });
+                routes.MapRoute(name: "default", template: "{Controller=Home}/{action=Index}/{id?}");
+            });
             DbInitializer.Seed(serviceProvider);
         }
     }

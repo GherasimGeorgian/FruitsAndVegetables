@@ -41,7 +41,7 @@ namespace FruitsAndVegetables.Data
                         Price = 12.95M,
                         ShortDescription = "Rosii premium calitatea ITara de origine: Ecuador.",
                         LongDescription = "A se pastra la loc uscat si racoros, ferit de actiunea directa a soarelui.",
-                        Category = Categories["Vegetables"],
+                        Category = Categories["Vegetable"],
                         ImageUrl = "https://api.time.com/wp-content/uploads/2019/11/gettyimages-459761948.jpg?w=800&quality=85",
                         InStock = true,
                         IsPreferredProduct = false,
@@ -53,7 +53,7 @@ namespace FruitsAndVegetables.Data
                         Price = 12.95M,
                         ShortDescription = "Cartofi premium calitatea ITara de origine: Ecuador.",
                         LongDescription = "A se pastra la loc uscat si racoros, ferit de actiunea directa a soarelui.",
-                        Category = Categories["Vegetables"],
+                        Category = Categories["Vegetable"],
                         ImageUrl = "https://api.time.com/wp-content/uploads/2019/11/gettyimages-459761948.jpg?w=800&quality=85",
                         InStock = true,
                         IsPreferredProduct = false,
@@ -86,7 +86,7 @@ namespace FruitsAndVegetables.Data
                     var genresList = new Category[]
                     {
                         new Category { CategoryName = "Fruit", Description="All fruits" },
-                        new Category { CategoryName = "Vegetables", Description="All vegetables" }
+                        new Category { CategoryName = "Vegetable", Description="All vegetables" }
                     };
 
                     categories = new Dictionary<string, Category>();

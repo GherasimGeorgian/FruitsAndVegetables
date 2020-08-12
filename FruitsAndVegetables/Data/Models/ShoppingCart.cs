@@ -30,20 +30,23 @@ namespace FruitsAndVegetables.Data.Models
 
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
-        public void AddToCart(Product product, int amount)
+        public void AddToCart(Product product1, int amount)
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Product.ProduceId == product.ProduceId && s.ShoppingCartId == ShoppingCartId);
-
+                        s => s.Productu.ProduceId == product1.ProduceId && s.ShoppingCartId == ShoppingCartId);
+           
             if (shoppingCartItem == null)
             {
-                shoppingCartItem = new ShoppingCartItem
+                shoppingCartItem = new ShoppingCartItem()
                 {
-                    ShoppingCartId = ShoppingCartId,
-                    Product = product,
-                    Amount = 1
+                      ShoppingCartId = ShoppingCartId,
+                      Productu = product1,
+                      Amount = amount
                 };
+               
+
+
 
                 _appDbContext.ShoppingCartItems.Add(shoppingCartItem);
             }
@@ -58,7 +61,7 @@ namespace FruitsAndVegetables.Data.Models
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Product.ProduceId == product.ProduceId && s.ShoppingCartId == ShoppingCartId);
+                        s => s.Productu.ProduceId == product.ProduceId && s.ShoppingCartId == ShoppingCartId);
 
             var localAmount = 0;
 
@@ -84,7 +87,7 @@ namespace FruitsAndVegetables.Data.Models
             return ShoppingCartItems ??
                    (ShoppingCartItems =
                        _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)
-                           .Include(s => s.Product)
+                           .Include(s => s.Productu)
                            .ToList());
         }
         public void ClearCart()
@@ -100,7 +103,7 @@ namespace FruitsAndVegetables.Data.Models
         public decimal GetShoppingCartTotal()
         {
             var total = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)
-                .Select(c => c.Product.Price * c.Amount).Sum();
+                .Select(c => c.Productu.Price * c.Amount).Sum();
             return total;
         }
     }

@@ -35,7 +35,7 @@ namespace FruitsAndVegetables
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
+
             //server configuration
             services.AddDbContext<AppDbContext>(options =>
                options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
@@ -51,6 +51,8 @@ namespace FruitsAndVegetables
             services.AddHttpContextAccessor();
 
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMemoryCache();

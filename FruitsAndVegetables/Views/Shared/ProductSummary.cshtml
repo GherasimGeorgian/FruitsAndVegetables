@@ -10,12 +10,5 @@
             </h3>
             <p>@Model.ShortDescription<p>
         </div>
-        <div class="addToCart text-right">
-            <p class="button ">
-                <a class="btn btn-success" id="cartButton" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-produceId="@Model.ProduceId">
-                    Add to cart @Model.ProduceId.ToString()
-                </a>
-            </p>
-        </div>
     </div>
 </div>

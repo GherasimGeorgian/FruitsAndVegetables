@@ -37,82 +37,6 @@ namespace FruitsAndVegetables.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("FruitsAndVegetables.Data.Models.Order", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AddressLine1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OrderPlaced")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("OrderTotal")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZipCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrderId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("FruitsAndVegetables.Data.Models.OrderDetail", b =>
-                {
-                    b.Property<int>("OrederDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DrinkId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ProductProduceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrederDetailId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductProduceId");
-
-                    b.ToTable("OrderDetails");
-                });
-
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.Product", b =>
                 {
                     b.Property<int>("ProduceId")
@@ -175,19 +99,6 @@ namespace FruitsAndVegetables.Migrations
                     b.HasIndex("ProductProduceId");
 
                     b.ToTable("ShoppingCartItems");
-                });
-
-            modelBuilder.Entity("FruitsAndVegetables.Data.Models.OrderDetail", b =>
-                {
-                    b.HasOne("FruitsAndVegetables.Data.Models.Order", "Order")
-                        .WithMany("OrderLines")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FruitsAndVegetables.Data.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductProduceId");
                 });
 
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.Product", b =>

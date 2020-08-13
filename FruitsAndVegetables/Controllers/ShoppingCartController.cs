@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using FruitsAndVegetables.Data.interfaces;
 using FruitsAndVegetables.Data.Models;
 using FruitsAndVegetables.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FruitsAndVegetables.Controllers
@@ -19,30 +18,29 @@ namespace FruitsAndVegetables.Controllers
             _productRepository = productRepository;
             _shoppingCart = shoppingCart;
         }
-        
-        public ViewResult Index()
+        public IActionResult Index()
         {
             var items = _shoppingCart.GetShoppingCartItems();
             _shoppingCart.ShoppingCartItems = items;
-            var shoppingCartViewModel = new ShoppingCartViewModel
+            var sCVM = new ShoppingCartViewModel
             {
                 ShoppingCart = _shoppingCart,
                 ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
             };
-            return View(shoppingCartViewModel);
+            return View(sCVM);
         }
-        
-        public RedirectToActionResult AddToShoppingCart(int produceId)
+
+        public RedirectToActionResult AddToShoppingCart(int productId)
         {
-            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == produceId);
+            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == productId);
             if(selectedProduct!= null){
-                _shoppingCart.AddToCart(selectedProduct,10);
+                _shoppingCart.AddToCart(selectedProduct,1);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index" );
         }
-        public RedirectToActionResult RemoveFromShoppingCart(int produceId)
+        public RedirectToActionResult RemoveFromShoppingCart(int productId)
         {
-            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == produceId);
+            var selectedProduct = _productRepository.Products.FirstOrDefault(p => p.ProduceId == productId);
             if (selectedProduct != null)
             {
                 _shoppingCart.RemoveFromCart(selectedProduct);

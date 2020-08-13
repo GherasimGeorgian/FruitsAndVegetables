@@ -38,12 +38,15 @@ namespace FruitsAndVegetables.Data.Models
 
             if (shoppingCartItem == null)
             {
-                shoppingCartItem = new ShoppingCartItem
+
+                shoppingCartItem = new ShoppingCartItem()
                 {
                     ShoppingCartId = ShoppingCartId,
-                    Product = product,
-                    Amount = 1
+                    
+                    Amount = amount
                 };
+               
+
 
                 _appDbContext.ShoppingCartItems.Add(shoppingCartItem);
             }

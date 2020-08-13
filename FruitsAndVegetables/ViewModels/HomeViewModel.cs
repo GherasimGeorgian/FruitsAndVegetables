@@ -8,6 +8,6 @@ namespace FruitsAndVegetables.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<Product> PrefferedProducts { get; set; }
+        public IEnumerable<Product> PreferredProducts { get; set; }
     }
 }

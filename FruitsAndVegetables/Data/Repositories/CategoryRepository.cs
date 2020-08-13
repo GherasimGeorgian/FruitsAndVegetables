@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FruitsAndVegetables.Data.Repositories
 {
-    public class CategoryRepository:ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly AppDbContext _appDbContext;
         public CategoryRepository(AppDbContext appDbContext)

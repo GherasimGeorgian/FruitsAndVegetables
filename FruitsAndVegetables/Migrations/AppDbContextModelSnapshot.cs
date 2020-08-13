@@ -45,22 +45,32 @@ namespace FruitsAndVegetables.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressLine1")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("AddressLine2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime2");
@@ -69,13 +79,18 @@ namespace FruitsAndVegetables.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<string>("ZipCode")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.HasKey("OrderId");
 
@@ -84,15 +99,12 @@ namespace FruitsAndVegetables.Migrations
 
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.OrderDetail", b =>
                 {
-                    b.Property<int>("OrederDetailId")
+                    b.Property<int>("OrderDetailId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DrinkId")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
@@ -101,21 +113,21 @@ namespace FruitsAndVegetables.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ProductProduceId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrederDetailId");
+                    b.HasKey("OrderDetailId");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductProduceId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.Product", b =>
                 {
-                    b.Property<int>("ProduceId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -147,7 +159,7 @@ namespace FruitsAndVegetables.Migrations
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProduceId");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
@@ -164,7 +176,7 @@ namespace FruitsAndVegetables.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductProduceId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
@@ -172,7 +184,7 @@ namespace FruitsAndVegetables.Migrations
 
                     b.HasKey("ShoppingCartItemId");
 
-                    b.HasIndex("ProductProduceId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ShoppingCartItems");
                 });
@@ -187,7 +199,9 @@ namespace FruitsAndVegetables.Migrations
 
                     b.HasOne("FruitsAndVegetables.Data.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductProduceId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.Product", b =>
@@ -203,7 +217,7 @@ namespace FruitsAndVegetables.Migrations
                 {
                     b.HasOne("FruitsAndVegetables.Data.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductProduceId");
+                        .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618
         }

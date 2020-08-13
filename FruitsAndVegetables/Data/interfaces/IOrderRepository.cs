@@ -8,6 +8,6 @@ namespace FruitsAndVegetables.Data.interfaces
 {
     public interface IOrderRepository
     {
-         void CreateOrder(Order order);
+        void CreateOrder(Order order);
     }
 }

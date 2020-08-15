@@ -41,6 +41,7 @@ namespace FruitsAndVegetables.Data.Models
                 shoppingCartItem = new ShoppingCartItem
                 {
                     ShoppingCartId = ShoppingCartId,
+                    ProduceId = product.ProduceId,
                     NameProduct = product.Name,
                     PriceProduct = product.Price,
                     Amount = 1

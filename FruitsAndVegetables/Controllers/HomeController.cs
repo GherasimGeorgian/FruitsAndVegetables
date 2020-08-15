@@ -15,15 +15,14 @@ namespace FruitsAndVegetables.Controllers
         {
             _productRepository = productRepository;
         }
-
         public ViewResult Index()
         {
             var homeViewModel = new HomeViewModel
             {
-                PreferredProducts = _productRepository.PreferredProducts
+                PrefferedProducts = _productRepository.PreferredProducts
             };
-            return View(homeViewModel);
+        return View(homeViewModel);
         }
     }
-
+    
 }

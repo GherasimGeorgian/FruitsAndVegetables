@@ -12,14 +12,22 @@ namespace FruitsAndVegetables.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-
-        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        private readonly IProductRepository _productRepository;
+        public ProductController(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
-            _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
+        // public ViewResult List()
+        // {
+
+        //     ViewBag.Name = "List Products";
+        //     ProductListViewModel vm = new ProductListViewModel();
+        //     vm.Products = _productRepository.Products;
+        //    vm.CurrentCategory = "FruitsAndVegetablesCategory";
+        //    return View(vm);
+        //}
 
         public ViewResult List(string category)
         {
@@ -29,52 +37,26 @@ namespace FruitsAndVegetables.Controllers
 
             if (string.IsNullOrEmpty(category))
             {
-                products = _productRepository.Products.OrderBy(p => p.ProductId);
-                currentCategory = "All products";
+                products = _productRepository.Products.OrderBy(p => p.ProduceId);
+                currentCategory = "All Products";
             }
             else
             {
                 if (string.Equals("Fruit", _category, StringComparison.OrdinalIgnoreCase))
-                    products = _productRepository.Products.Where(p => p.Category.CategoryName.Equals("Fruit")).OrderBy(p => p.Name);
+                   products = _productRepository.Products.Where(p => p.CategoryId.Equals(1)).OrderBy(p => p.Name);
                 else
-                    products = _productRepository.Products.Where(p => p.Category.CategoryName.Equals("Vegetable")).OrderBy(p => p.Name);
+                    products = _productRepository.Products.Where(p => p.CategoryId.Equals(2)).OrderBy(p => p.Name);
 
                 currentCategory = _category;
             }
 
-            return View(new ProductsListViewModel
+            return View(new ProductListViewModel
             {
                 Products = products,
                 CurrentCategory = currentCategory
             });
         }
 
-        public ViewResult Search(string searchString)
-        {
-            string _searchString = searchString;
-            IEnumerable<Product> products;
-            string currentCategory = string.Empty;
-
-            if (string.IsNullOrEmpty(_searchString))
-            {
-                products = _productRepository.Products.OrderBy(p => p.ProductId);
-            }
-            else
-            {
-                products = _productRepository.Products.Where(p => p.Name.ToLower().Contains(_searchString.ToLower()));
-            }
-
-            return View("~/Views/Product/List.cshtml", new ProductsListViewModel { Products = products, CurrentCategory = "All products" });
-        }
-
-        public ViewResult Details(int productId)
-        {
-            var product = _productRepository.Products.FirstOrDefault(d => d.ProductId == productId);
-            if (product == null)
-            {
-                return View("~/Views/Error/Error.cshtml");
-            }
-            return View(product);
-        }
+        
     }
 }

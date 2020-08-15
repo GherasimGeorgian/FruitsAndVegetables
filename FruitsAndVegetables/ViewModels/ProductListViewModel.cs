@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FruitsAndVegetables.Data.Models;
 namespace FruitsAndVegetables.ViewModels
 {
-    public class ProductsListViewModel
+    public class ProductListViewModel
     {
         public IEnumerable<Product> Products { get; set; }
         public string CurrentCategory { get; set; }

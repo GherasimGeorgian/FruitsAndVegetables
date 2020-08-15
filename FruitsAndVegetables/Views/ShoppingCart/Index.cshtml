@@ -19,37 +19,37 @@
             <tr>
                 <td class="text-center">@line.Amount</td>
                 <td class="text-left">@line.Product.Name</td>
-                 <td class="text-right">@line.Product.Price.ToString("c")</td>
-        <td class="text-right">
-            @((line.Amount * line.Product.Price).ToString("c"))
+                @*<td class="text-right">@line.Product.Price.ToString("c")</td>
+          <td class="text-right">
+        @((line.Amount * line.Product.Price).ToString("c"))
         </td>
-        <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-productId="@line.Product.ProductId"></a></td>
-                
+        <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-produceId="@line.Product.ProduceId"></a></td>
+                *@
             </tr>
                 }
-</tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" class="text-right">Total:</td>
-                <td class="text-right">
-                    @Model.ShoppingCartTotal.ToString("c")
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right">Total:</td>
+                    <td class="text-right">
+                        @Model.ShoppingCartTotal.ToString("c")
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
 
-    <div class="text-right">
-        <div class="btn-group ">
-            <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Check out</a>
-            <a class="btn-group">
+        <div class="text-right">
+            <div class="btn-group ">
+                <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Check out</a>
+                @*<a class="btn-group">*@
                 <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     Add more products<span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a asp-controller="Product" asp-action="List" asp-route-category="Fruit">Fruit</a></li>
-                    <li><a asp-controller="Product" asp-action="List" asp-route-category="Vegetable">Vegetable</a></li>
+                    <li><a asp-controller="Product" asp-action="List" asp-route-category="Fruits">Fruits</a></li>
+                    <li><a asp-controller="Product" asp-action="List" asp-route-category="Vegetables">Vegetables</a></li>
                 </ul>
-            </a>
-        </div>
+                @*</a>*@
+</div>
     </div>
 </div>

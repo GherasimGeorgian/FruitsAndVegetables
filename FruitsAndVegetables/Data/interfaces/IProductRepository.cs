@@ -9,6 +9,6 @@ namespace FruitsAndVegetables.Data.interfaces
     {
         IEnumerable<Product> Products { get; }
         IEnumerable<Product> PreferredProducts { get; }
-        Product GetProductById(int drinkId);
+        Product GetProductById(int productId);
     }
 }

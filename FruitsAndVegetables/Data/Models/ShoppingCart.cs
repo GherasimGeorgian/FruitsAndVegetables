@@ -15,9 +15,7 @@ namespace FruitsAndVegetables.Data.Models
         {
             _appDbContext = appDbContext;
         }
-
         public string ShoppingCartId { get; set; }
-
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         public static ShoppingCart GetCart(IServiceProvider services)
@@ -32,23 +30,21 @@ namespace FruitsAndVegetables.Data.Models
 
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
-
         public void AddToCart(Product product, int amount)
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Product.ProductId == product.ProductId && s.ShoppingCartId == ShoppingCartId);
+                        s => s.Product.ProduceId == product.ProduceId && s.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem == null)
             {
-                shoppingCartItem = new ShoppingCartItem()
+                shoppingCartItem = new ShoppingCartItem
                 {
                     ShoppingCartId = ShoppingCartId,
-                    Product = product ,
+                    Product = product,
                     Amount = 1
                 };
-               
-               
+
                 _appDbContext.ShoppingCartItems.Add(shoppingCartItem);
             }
             else
@@ -62,7 +58,7 @@ namespace FruitsAndVegetables.Data.Models
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Product.ProductId == product.ProductId && s.ShoppingCartId == ShoppingCartId);
+                        s => s.Product.ProduceId == product.ProduceId && s.ShoppingCartId == ShoppingCartId);
 
             var localAmount = 0;
 
@@ -83,7 +79,6 @@ namespace FruitsAndVegetables.Data.Models
 
             return localAmount;
         }
-
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
             return ShoppingCartItems ??
@@ -92,7 +87,6 @@ namespace FruitsAndVegetables.Data.Models
                            .Include(s => s.Product)
                            .ToList());
         }
-
         public void ClearCart()
         {
             var cartItems = _appDbContext
@@ -103,7 +97,6 @@ namespace FruitsAndVegetables.Data.Models
 
             _appDbContext.SaveChanges();
         }
-
         public decimal GetShoppingCartTotal()
         {
             var total = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)

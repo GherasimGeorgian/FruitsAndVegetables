@@ -18,9 +18,9 @@
             {
             <tr>
                 <td class="text-center">@line.Amount</td>
-                <td class="text-left">@line.Product.Name</td>
-                @*<td class="text-right">@line.Product.Price.ToString("c")</td>
-          <td class="text-right">
+                <td class="text-left">@line.NameProduct</td>
+                <td class="text-right">@line.PriceProduct.ToString("c")</td>
+          @*<td class="text-right">
         @((line.Amount * line.Product.Price).ToString("c"))
         </td>
         <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-produceId="@line.Product.ProduceId"></a></td>

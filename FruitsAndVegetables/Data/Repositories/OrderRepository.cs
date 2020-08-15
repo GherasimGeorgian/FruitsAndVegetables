@@ -27,9 +27,9 @@ namespace FruitsAndVegetables.Data.Repositories
                 var orderDetail = new OrderDetail()
                 {
                     Amount = item.Amount,
-                    ProduceId = item.Product.ProduceId,
+                    ProduceId = item.ProduceId,
                     OrderId = order.OrderId,
-                    Price = item.Product.Price
+                    Price = item.PriceProduct
                 };
                 _appDbContext.OrderDetails.Add(orderDetail);
             }

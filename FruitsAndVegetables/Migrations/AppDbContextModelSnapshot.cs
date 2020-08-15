@@ -92,14 +92,14 @@ namespace FruitsAndVegetables.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("DrinkId")
-                        .HasColumnType("int");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProduceId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ProductProduceId")
                         .HasColumnType("int");
@@ -164,15 +164,25 @@ namespace FruitsAndVegetables.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductProduceId")
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameProduct")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PriceProduct")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProduceId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ShoppingCartItemId");
-
-                    b.HasIndex("ProductProduceId");
 
                     b.ToTable("ShoppingCartItems");
                 });
@@ -197,13 +207,6 @@ namespace FruitsAndVegetables.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FruitsAndVegetables.Data.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("FruitsAndVegetables.Data.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductProduceId");
                 });
 #pragma warning restore 612, 618
         }

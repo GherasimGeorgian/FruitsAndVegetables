@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FruitsAndVegetables.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200811144040_CartItem")]
-    partial class CartItem
+    [Migration("20200815110956_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,82 @@ namespace FruitsAndVegetables.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("FruitsAndVegetables.Data.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddressLine1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderPlaced")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OrderTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("FruitsAndVegetables.Data.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrederDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProduceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductProduceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrederDetailId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductProduceId");
+
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.Product", b =>
@@ -90,7 +166,19 @@ namespace FruitsAndVegetables.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductProduceId")
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameProduct")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PriceProduct")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProduceId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
@@ -98,9 +186,20 @@ namespace FruitsAndVegetables.Migrations
 
                     b.HasKey("ShoppingCartItemId");
 
-                    b.HasIndex("ProductProduceId");
-
                     b.ToTable("ShoppingCartItems");
+                });
+
+            modelBuilder.Entity("FruitsAndVegetables.Data.Models.OrderDetail", b =>
+                {
+                    b.HasOne("FruitsAndVegetables.Data.Models.Order", "Order")
+                        .WithMany("OrderLines")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FruitsAndVegetables.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductProduceId");
                 });
 
             modelBuilder.Entity("FruitsAndVegetables.Data.Models.Product", b =>
@@ -110,13 +209,6 @@ namespace FruitsAndVegetables.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FruitsAndVegetables.Data.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("FruitsAndVegetables.Data.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductProduceId");
                 });
 #pragma warning restore 612, 618
         }

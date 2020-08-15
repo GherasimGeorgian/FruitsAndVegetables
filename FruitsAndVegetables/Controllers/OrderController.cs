@@ -22,5 +22,30 @@ namespace FruitsAndVegetables.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Checkout(Order order)
+        {
+            var items = _shoppingCart.GetShoppingCartItems();
+            _shoppingCart.ShoppingCartItems = items;
+            if (_shoppingCart.ShoppingCartItems.Count == 0)
+            {
+                ModelState.AddModelError("", "Your card is empty, add some drinks first");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _orderRepository.CreateOrder(order);
+                _shoppingCart.ClearCart();
+                return RedirectToAction("CheckoutComplete");
+            }
+
+            return View(order);
+        }
+        public IActionResult CheckoutComplete()
+        {
+            ViewBag.CheckoutCompleteMessage = "Thanks for your order! :) ";
+            return View();
+        }
+
     }
 }

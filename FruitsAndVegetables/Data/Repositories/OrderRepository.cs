@@ -18,21 +18,28 @@ namespace FruitsAndVegetables.Data.Repositories
         }
         public void CreateOrder(Order order)
         {
+          
             order.OrderPlaced = DateTime.Now;
+            order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
             _appDbContext.Orders.Add(order);
+
+            _appDbContext.SaveChanges();
+
             var shoppingCartItems = _shoppingCart.ShoppingCartItems;
 
-            foreach (var item in shoppingCartItems)
+            foreach (var shoppingCartItem in shoppingCartItems)
             {
                 var orderDetail = new OrderDetail()
                 {
-                    Amount = item.Amount,
-                    ProduceId = item.ProduceId,
-                    OrderId = order.OrderId,
-                    Price = item.PriceProduct
+                     Amount = shoppingCartItem.Amount,
+                    ProduceId = shoppingCartItem.ProduceId,
+                    OrderId2 = order.OrderId,
+                    Price = shoppingCartItem.PriceProduct
                 };
+         
                 _appDbContext.OrderDetails.Add(orderDetail);
             }
+
             _appDbContext.SaveChanges();
         }
     }

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore; //Install-Package Microsoft.EntityFrameworkCore.SqlServer
 using FruitsAndVegetables.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 namespace FruitsAndVegetables.Data
 {
     //Install-Package Microsoft.EntityFrameworkCore.Tools
@@ -14,7 +17,7 @@ namespace FruitsAndVegetables.Data
     // Update-database // No type was specified for the decimal column 'Price' on entity type 'Product' Solve:[Column(TypeName = "decimal(18,2)")]
     // The type 'AppDbContext' does not inherit from DbContext. The DbMigrationsConfiguration.ContextType property must be set to a type that inherits from DbContext. Solve:EntityFrameworkCore\Add-Migration
     //EntityFrameworkCore\Update-Database
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>// DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
         {

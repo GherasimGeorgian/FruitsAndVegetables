@@ -18,6 +18,7 @@ using FruitsAndVegetables.Data.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing.Template;
+using Microsoft.AspNetCore.Identity;
 
 namespace FruitsAndVegetables
 {
@@ -39,7 +40,12 @@ namespace FruitsAndVegetables
             //server configuration
             services.AddDbContext<AppDbContext>(options =>
                options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
-           
+
+
+            //Authentication, Identity config
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+
             //services.AddTransient<IProductRepository,MockProductRepository>();
             //services.AddTransient<ICategoryRepository,MockCategoryRepository>();
             services.AddTransient<IProductRepository,ProductRepository>();
@@ -57,6 +63,7 @@ namespace FruitsAndVegetables
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMemoryCache();
             services.AddSession();
+            
 
 
         }
@@ -69,6 +76,10 @@ namespace FruitsAndVegetables
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
+
+            app.UseAuthentication();
+
+
             //app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {

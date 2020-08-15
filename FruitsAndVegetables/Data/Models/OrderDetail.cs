@@ -8,9 +8,11 @@ namespace FruitsAndVegetables.Data.Models
 {
     public class OrderDetail
     {
+
         [Key]
         public int OrederDetailId { get; set; }
-        public int OrderId { get; set; }
+        
+        public int OrderId2 { get; set; }
         public int ProduceId { get; set; }
 
         public int Amount { get; set; }

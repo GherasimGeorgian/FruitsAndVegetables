@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FruitsAndVegetables.Data.interfaces;
 using FruitsAndVegetables.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FruitsAndVegetables.Controllers
@@ -18,11 +19,13 @@ namespace FruitsAndVegetables.Controllers
             _orderRepository = orderRepository;
             _shoppingCart = shoppingCart;
         }
+        [Authorize]
         public IActionResult Checkout()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Checkout(Order order)
         {
             var items = _shoppingCart.GetShoppingCartItems();
